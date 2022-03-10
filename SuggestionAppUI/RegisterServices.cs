@@ -8,6 +8,14 @@
          builder.Services.AddRazorPages();
          builder.Services.AddServerSideBlazor();
          builder.Services.AddMemoryCache();
+
+         builder.Services.AddSingleton<IDBConnection, DBConnection>();
+         builder.Services.AddTransient<ICategoryData, MongoCategoryData>();
+         builder.Services.AddTransient<IStatusData,MongoStatusData>();
+         builder.Services.AddTransient<ISuggestionData, MongoSuggestionData>();
+         builder.Services.AddTransient<IUserData, MongoUserData>();
+
+
       }
    }
 }
