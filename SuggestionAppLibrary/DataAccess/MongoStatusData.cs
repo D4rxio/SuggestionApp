@@ -14,7 +14,7 @@ public class MongoStatusData : IStatusData
       _statuses = db.StatusCollection;
    }
 
-   public async Task<List<StatusModel>> GetStatuses(string id)
+   public async Task<List<StatusModel>> GetAllStatuses()
    {
       var output = _cache.Get<List<StatusModel>>(CacheName);
 
