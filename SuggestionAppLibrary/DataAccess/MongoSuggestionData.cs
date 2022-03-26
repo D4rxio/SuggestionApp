@@ -18,6 +18,7 @@ public class MongoSuggestionData : ISuggestionData
       _cache = cache;
       _suggestions = db.SuggestionCollection;
    }
+     
 
    public async Task<List<SuggestionModel>> GetAllSuggestions()
    {
@@ -30,6 +31,20 @@ public class MongoSuggestionData : ISuggestionData
          _cache.Set(CacheName, output, TimeSpan.FromMinutes(1));
       }
 
+
+      return output;
+   }
+
+   public async Task<List<SuggestionModel>> GetUsersSuggestions(string userId)
+   {
+      var output = _cache.Get<List<SuggestionModel>>(userId);
+      if(output is null)
+      {
+         var results = await _suggestions.FindAsync(s => s.Author.Id == userId); 
+         output = results.ToList();
+         
+         _cache.Set(userId, output, TimeSpan.FromMinutes(1));         
+      }
 
       return output;
    }
